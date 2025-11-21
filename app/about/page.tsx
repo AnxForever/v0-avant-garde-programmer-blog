@@ -49,10 +49,10 @@ export default function AboutPage() {
             transition={{ duration: 0.8, ease: "circOut" }}
             className="text-[15vw] leading-[0.8] font-black tracking-tighter text-center mix-blend-difference text-black"
           >
-            AVANT
+            VIBE
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-pink via-accent-green to-accent-blue animate-gradient-x">
-              GARDE
+              CODER
             </span>
           </motion.h1>
           <motion.p
@@ -61,7 +61,7 @@ export default function AboutPage() {
             transition={{ delay: 0.5 }}
             className="text-xl md:text-3xl font-mono text-center mt-8 max-w-2xl mx-auto"
           >
-            Redefining the digital frontier through code, chaos, and color.
+            数据科学 × AI × 音乐 × 动漫 = 无限可能
           </motion.p>
         </div>
       </section>
@@ -77,15 +77,15 @@ export default function AboutPage() {
           >
             <div className="relative aspect-[3/4] w-full max-w-md mx-auto overflow-hidden border-4 border-black bg-black group">
               <Image
-                src="/public/avant-garde-portrait-cyberpunk.jpg"
-                alt="Portrait"
+                src="/profile-avatar.jpg"
+                alt="包安心的头像"
                 width={600}
                 height={800}
-                className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
+                className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-accent-green mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <div className="absolute bottom-0 left-0 w-full p-4 bg-black text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <p className="font-mono text-sm">SYSTEM.ARCHITECT</p>
+                <p className="font-mono text-sm">VIBE.CODER</p>
               </div>
             </div>
             {/* Decorative Elements */}
@@ -100,11 +100,11 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="text-6xl md:text-8xl font-black tracking-tighter"
             >
-              THE <span className="text-accent-pink">GLITCH</span>
+              包安心
               <br />
-              IN THE
+              <span className="text-accent-pink">BAO</span>
               <br />
-              <span className="text-accent-green">MATRIX</span>
+              <span className="text-accent-green">ANXIN</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -113,11 +113,14 @@ export default function AboutPage() {
               transition={{ delay: 0.2 }}
               className="text-xl md:text-2xl font-mono leading-relaxed"
             >
-              我不只是写代码，我谱写数字交响曲。我的作品存在于野兽派美学与高性能工程的交汇处。我相信 Web
-              应该是喧闹的、快速的、令人难忘的。
+              大四 · 数据科学与大数据技术 · Vibe Coding 信徒
+              <br />
+              <br />
+              我在数据的海洋中寻找模式，在 AI
+              的黑盒中探索可能，在音乐和动漫中汲取灵感。我相信最好的代码不是写出来的，而是'感觉'出来的。
             </motion.p>
             <div className="flex flex-wrap gap-4">
-              {["React", "Next.js", "WebGL", "Three.js", "Design"].map((tag, i) => (
+              {["Python", "TensorFlow", "Next.js", "数据可视化", "音乐", "动漫"].map((tag, i) => (
                 <span
                   key={tag}
                   className="px-4 py-2 border-2 border-black font-bold hover:bg-black hover:text-white transition-colors cursor-crosshair"
@@ -138,20 +141,20 @@ export default function AboutPage() {
             {[
               {
                 icon: Zap,
-                title: "速度 / SPEED",
-                desc: "性能不是一个特性，而是一个要求。我们为思维的速度而构建。",
+                title: "直觉 / INTUITION",
+                desc: "数据告诉我们是什么，但直觉告诉我们为什么。最好的洞察往往来自二者的结合。",
                 color: "text-accent-yellow",
               },
               {
                 icon: Code,
-                title: "工艺 / CRAFT",
-                desc: "每一行代码都是一笔。干净、高效、有目的。",
+                title: "探索 / EXPLORATION",
+                desc: "从 Python 到 JavaScript，从数据分析到前端开发，保持好奇心，永不停止学习。",
                 color: "text-accent-pink",
               },
               {
                 icon: Globe,
-                title: "影响 / IMPACT",
-                desc: "我们不只是建立网站。我们构建在数字宇宙中留下印记的世界。",
+                title: "创造 / CREATION",
+                desc: "用代码创造美，用数据讲述故事，用 AI 拓展想象力的边界。",
                 color: "text-accent-blue",
               },
             ].map((item, i) => (
@@ -182,17 +185,17 @@ export default function AboutPage() {
             whileInView={{ opacity: 1 }}
             className="text-5xl md:text-7xl font-black mb-20 text-center"
           >
-            时间轴 / TIMELINE
+            我的旅程 / JOURNEY
           </motion.h2>
 
           <div className="relative max-w-4xl mx-auto">
             <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-1 bg-black transform md:-translate-x-1/2" />
 
             {[
-              { year: "2024", title: "高级工程师", company: "科技巨头", side: "left" },
-              { year: "2022", title: "首席开发", company: "创意代理", side: "right" },
-              { year: "2020", title: "全栈开发", company: "初创公司", side: "left" },
-              { year: "2018", title: "Hello World", company: "起源", side: "right" },
+              { year: "2025", title: "创建个人博客", company: "记录 Vibe Coding 之旅", side: "left" },
+              { year: "2024", title: "深入学习 AI", company: "探索大语言模型与生成式 AI", side: "right" },
+              { year: "2023", title: "数据可视化项目", company: "用图表讲述数据故事", side: "left" },
+              { year: "2021", title: "进入大学", company: "开始数据科学专业学习", side: "right" },
             ].map((item, i) => (
               <motion.div
                 key={i}
@@ -231,15 +234,15 @@ export default function AboutPage() {
             transition={{ type: "spring", bounce: 0.5 }}
           >
             <h2 className="text-6xl md:text-9xl font-black tracking-tighter mb-8">
-              让我们
+              一起
               <br />
-              开始
+              Vibe!
             </h2>
             <a
               href="/contact"
               className="inline-flex items-center gap-2 text-2xl md:text-4xl font-bold border-4 border-black px-8 py-4 hover:bg-black hover:text-white transition-colors"
             >
-              开始项目 <ArrowDownRight className="w-8 h-8" />
+              联系我 <ArrowDownRight className="w-8 h-8" />
             </a>
           </motion.div>
         </div>

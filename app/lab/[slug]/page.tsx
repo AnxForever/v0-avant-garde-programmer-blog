@@ -3,12 +3,57 @@
 import { Nav } from "@/components/nav"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft, Play, RefreshCw } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { useParams } from "next/navigation"
+import { experiments } from "@/lib/data"
+import { AudioReactiveParticles } from "@/components/experiments/audio-reactive-particles"
+import { GenerativeTypography } from "@/components/experiments/generative-typography"
+import { PhysicsBasedLayout } from "@/components/experiments/physics-based-layout"
 
 export default function ExperimentPage() {
   const params = useParams()
-  const id = params.slug as string
+  const slug = params.slug as string
+
+  const experiment = experiments.find((exp) => exp.slug === slug)
+
+  if (!experiment) {
+    return (
+      <main className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-6xl font-black mb-4">404</h1>
+          <p className="font-mono text-accent-pink mb-8">实验不存在</p>
+          <Link href="/lab" className="font-bold hover:text-accent-green transition-colors">
+            返回实验室
+          </Link>
+        </div>
+      </main>
+    )
+  }
+
+  const renderExperiment = () => {
+    switch (slug) {
+      case "audio-reactive-particles":
+        return <AudioReactiveParticles />
+      case "generative-typography":
+        return <GenerativeTypography />
+      case "physics-based-layout":
+        return <PhysicsBasedLayout />
+      default:
+        return (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+                className="w-24 h-24 border-4 border-accent-blue border-t-transparent rounded-full mx-auto mb-6"
+              />
+              <h2 className="text-2xl font-black mb-2">功能开发中...</h2>
+              <p className="font-mono text-gray-400 text-sm">即将推出</p>
+            </div>
+          </div>
+        )
+    }
+  }
 
   return (
     <main className="min-h-screen bg-black text-white selection:bg-accent-green selection:text-black">
@@ -21,36 +66,16 @@ export default function ExperimentPage() {
             className="inline-flex items-center gap-2 font-bold hover:text-accent-green transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
-            EXIT LAB
+            退出实验室
           </Link>
-          <div className="font-mono text-accent-pink">EXP_ID: {id}</div>
+          <div className="flex items-center gap-4">
+            <h1 className="font-black text-2xl">{experiment.title}</h1>
+            <div className="font-mono text-accent-pink text-sm">ID: {experiment.id}</div>
+          </div>
         </div>
 
-        <div className="flex-1 border border-white/20 relative bg-gray-900/50 overflow-hidden rounded-lg">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-center">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                className="w-24 h-24 border-4 border-accent-blue border-t-transparent rounded-full mx-auto mb-6"
-              />
-              <h2 className="text-2xl font-black mb-2">INITIALIZING EXPERIMENT...</h2>
-              <p className="font-mono text-gray-400 text-sm">Loading WebGL Context</p>
-            </div>
-          </div>
-
-          {/* Controls Overlay */}
-          <div className="absolute bottom-0 left-0 w-full p-6 bg-black/80 backdrop-blur-sm border-t border-white/10 flex justify-between items-center">
-            <div className="flex gap-4">
-              <button className="w-12 h-12 bg-white text-black flex items-center justify-center hover:bg-accent-green transition-colors">
-                <Play className="w-5 h-5 fill-current" />
-              </button>
-              <button className="w-12 h-12 border border-white flex items-center justify-center hover:bg-white/10 transition-colors">
-                <RefreshCw className="w-5 h-5" />
-              </button>
-            </div>
-            <div className="font-mono text-xs text-gray-400">RENDER_TIME: 16.7ms | FPS: 60</div>
-          </div>
+        <div className="flex-1 border-4 border-white relative bg-gray-900 overflow-hidden shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]">
+          {renderExperiment()}
         </div>
       </div>
     </main>

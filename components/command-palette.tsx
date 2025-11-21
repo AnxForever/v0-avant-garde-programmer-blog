@@ -16,6 +16,10 @@ export function CommandPalette() {
         e.preventDefault()
         setOpen((open) => !open)
       }
+      if (e.key === "Escape") {
+        e.preventDefault()
+        setOpen(false)
+      }
     }
     document.addEventListener("keydown", down)
     return () => document.removeEventListener("keydown", down)
