@@ -129,7 +129,7 @@ importers:
         specifier: 16.0.3
         version: 16.0.3(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       next-themes:
-        specifier: ^0.4.6
+        specifier: latest
         version: 0.4.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react:
         specifier: 19.2.0
