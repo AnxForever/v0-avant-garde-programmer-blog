@@ -54,7 +54,7 @@
     "jest": "latest",
     "lucide-react": "^0.454.0",
     "matter-js": "latest",
-    "next": "16.0.3",
+    "next": "16.0.7",
     "next-themes": "latest",
     "node-notifier": "latest",
     "react": "19.2.0",
