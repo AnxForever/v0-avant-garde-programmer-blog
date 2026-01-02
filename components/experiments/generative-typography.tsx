@@ -5,11 +5,19 @@ import { useEffect, useRef, useState } from "react"
 export function GenerativeTypography() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [windowSize, setWindowSize] = useState({ width: 800, height: 600 })
 
   const text = "前卫编程美学"
   const letters = text.split("")
 
   useEffect(() => {
+    // 初始化窗口尺寸
+    setWindowSize({ width: window.innerWidth, height: window.innerHeight })
+
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight })
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return
       const rect = containerRef.current.getBoundingClientRect()
@@ -24,10 +32,13 @@ export function GenerativeTypography() {
       container.addEventListener("mousemove", handleMouseMove)
     }
 
+    window.addEventListener("resize", handleResize)
+
     return () => {
       if (container) {
         container.removeEventListener("mousemove", handleMouseMove)
       }
+      window.removeEventListener("resize", handleResize)
     }
   }, [])
 
@@ -51,8 +62,8 @@ export function GenerativeTypography() {
         {letters.map((letter, index) => {
           const letterX = (index - letters.length / 2) * 80
           const letterY = 0
-          const dx = mousePos.x - window.innerWidth / 2 - letterX
-          const dy = mousePos.y - window.innerHeight / 2 - letterY
+          const dx = mousePos.x - windowSize.width / 2 - letterX
+          const dy = mousePos.y - windowSize.height / 2 - letterY
           const distance = Math.sqrt(dx * dx + dy * dy)
           const maxDistance = 300
 

@@ -7,15 +7,64 @@ import { Footer } from "@/components/footer"
 import { motion } from "framer-motion"
 import { useState } from "react"
 
-export default function ContactPage() {
-  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success">("idle")
+interface FormErrors {
+  name?: string
+  email?: string
+  message?: string
+  general?: string
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
+export default function ContactPage() {
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
+  const [errors, setErrors] = useState<FormErrors>({})
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    // 清除该字段的错误
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }))
+    }
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormStatus("submitting")
-    setTimeout(() => {
-      setFormStatus("success")
-    }, 1500)
+    setErrors({})
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setFormStatus("success")
+        setFormData({ name: "", email: "", message: "" })
+      } else {
+        setFormStatus("error")
+        // 处理验证错误
+        if (data.errors && Array.isArray(data.errors)) {
+          setErrors({ general: data.errors.join(", ") })
+        } else {
+          setErrors({ general: "发送失败，请稍后重试" })
+        }
+      }
+    } catch {
+      setFormStatus("error")
+      setErrors({ general: "网络错误，请检查您的连接" })
+    }
+  }
+
+  const resetForm = () => {
+    setFormStatus("idle")
+    setErrors({})
   }
 
   return (
@@ -77,7 +126,7 @@ export default function ContactPage() {
                 <h3 className="text-3xl font-black uppercase mb-2">信号已接收</h3>
                 <p className="font-mono text-gray-600">我会以光速回复你。</p>
                 <button
-                  onClick={() => setFormStatus("idle")}
+                  onClick={resetForm}
                   className="mt-8 text-sm font-bold underline hover:text-accent-pink"
                 >
                   发送另一条
@@ -85,31 +134,50 @@ export default function ContactPage() {
               </div>
             ) : (
               <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+                {/* 显示通用错误 */}
+                {errors.general && (
+                  <div className="bg-red-50 border-2 border-red-500 p-4 text-red-600 font-mono text-sm">
+                    {errors.general}
+                  </div>
+                )}
+
                 <div className="flex flex-col gap-2">
-                  <label className="font-mono font-bold uppercase text-sm">身份 / IDENTITY</label>
+                  <label htmlFor="name" className="font-mono font-bold uppercase text-sm">身份 / IDENTITY</label>
                   <input
+                    id="name"
+                    name="name"
                     required
                     type="text"
+                    value={formData.name}
+                    onChange={handleChange}
                     placeholder="你的名字"
                     className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-mono font-bold uppercase text-sm">坐标 / COORDINATES</label>
+                  <label htmlFor="email" className="font-mono font-bold uppercase text-sm">坐标 / COORDINATES</label>
                   <input
+                    id="email"
+                    name="email"
                     required
                     type="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     placeholder="你的邮箱"
                     className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="font-mono font-bold uppercase text-sm">传输内容 / TRANSMISSION</label>
+                  <label htmlFor="message" className="font-mono font-bold uppercase text-sm">传输内容 / TRANSMISSION</label>
                   <textarea
+                    id="message"
+                    name="message"
                     required
                     rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
                     placeholder="告诉我一切..."
                     className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors resize-none"
                   />
@@ -120,7 +188,9 @@ export default function ContactPage() {
                   disabled={formStatus === "submitting"}
                   className="bg-black text-white py-6 px-8 font-bold text-xl uppercase tracking-widest hover:bg-accent-pink transition-colors mt-4 group flex justify-between items-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <span>{formStatus === "submitting" ? "传输中..." : "发送信息"}</span>
+                  <span>
+                    {formStatus === "submitting" ? "传输中..." : formStatus === "error" ? "重新发送" : "发送信息"}
+                  </span>
                   <span className="group-hover:translate-x-2 transition-transform">-&gt;</span>
                 </button>
               </form>
