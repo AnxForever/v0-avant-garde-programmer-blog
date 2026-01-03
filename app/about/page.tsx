@@ -78,7 +78,7 @@ export default function AboutPage() {
             <div className="relative aspect-[3/4] w-full max-w-md mx-auto overflow-hidden border-4 border-black bg-black group">
               <Image
                 src="/profile-avatar.jpg"
-                alt="包安心的头像"
+                alt="Anx的头像"
                 width={600}
                 height={800}
                 className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
@@ -100,11 +100,9 @@ export default function AboutPage() {
               viewport={{ once: true }}
               className="text-6xl md:text-8xl font-black tracking-tighter"
             >
-              包安心
+              <span className="text-accent-pink">Anx</span>
               <br />
-              <span className="text-accent-pink">BAO</span>
-              <br />
-              <span className="text-accent-green">ANXIN</span>
+              <span className="text-accent-green">Forever</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -113,7 +111,7 @@ export default function AboutPage() {
               transition={{ delay: 0.2 }}
               className="text-xl md:text-2xl font-mono leading-relaxed"
             >
-              大四 · 数据科学与大数据技术 · Vibe Coding 信徒
+              数据科学 & AI 开发者 · Vibe Coding 信徒
               <br />
               <br />
               我在数据的海洋中寻找模式，在 AI
@@ -135,7 +133,7 @@ export default function AboutPage() {
 
       {/* Philosophy / Manifesto */}
       <section className="py-24 bg-black text-white overflow-hidden relative">
-        <div className="absolute inset-0 bg-[url('/public/abstract-noise.png')] opacity-20" />
+        <div className="absolute inset-0 bg-[url('/abstract-noise.png')] opacity-20" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[

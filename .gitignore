@@ -56,12 +56,7 @@ Thumbs.db
 /playwright/.cache/
 
 # Claude Code
-.claude/debug/
-.claude/file-history/
-.claude/plans/
-.claude/session-env/
-.claude/todos/
-.claude/telemetry/
+.claude/
 
 # BMad Method Framework
 .bmad-core/

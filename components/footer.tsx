@@ -42,7 +42,7 @@ export function Footer() {
               QQ邮箱
             </a>
           </div>
-          <p className="font-mono text-sm font-bold bg-black text-white px-2 py-1 mt-8">DESIGNED & BUILT BY V0</p>
+          <p className="font-mono text-sm font-bold bg-black text-white px-2 py-1 mt-8">DESIGNED & BUILT BY ANX</p>
         </div>
       </div>
 
