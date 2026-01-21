@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { ArrowUpRight } from "lucide-react"
+import ArrowUpRight from "lucide-react/dist/esm/icons/arrow-up-right"
 import Link from "next/link"
 
 const posts = [

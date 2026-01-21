@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { posts } from "@/lib/data"
+import { getCachedPost, getCachedPostSlugs, extractDescription } from "@/lib/blog-data"
 import { BlogPostContent } from "@/components/blog-post-content"
 
 const BASE_URL = 'https://anxforever-blog.vercel.app'
@@ -11,15 +11,16 @@ interface PageProps {
 
 // 生成静态参数，用于构建时预渲染所有博客文章
 export async function generateStaticParams() {
-  return posts.map((post) => ({
-    slug: post.slug,
+  const slugs = getCachedPostSlugs()
+  return slugs.map((slug) => ({
+    slug,
   }))
 }
 
 // 为每个博客文章生成动态元数据
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const post = posts.find((p) => p.slug === slug)
+  const post = getCachedPost(slug)
 
   if (!post) {
     return {
@@ -27,9 +28,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     }
   }
 
-  // 提取纯文本摘要（去除 Markdown 语法）
-  const plainTextContent = post.content.replace(/[#*`\[\]]/g, '').trim()
-  const description = plainTextContent.slice(0, 160) + (plainTextContent.length > 160 ? '...' : '')
+  // 使用缓存的描述提取函数
+  const description = extractDescription(post.content, 160)
 
   return {
     title: post.title,
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function BlogPost({ params }: PageProps) {
   const { slug } = await params
-  const post = posts.find((p) => p.slug === slug)
+  const post = getCachedPost(slug)
 
   if (!post) {
     notFound()

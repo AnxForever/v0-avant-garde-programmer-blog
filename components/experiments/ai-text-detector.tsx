@@ -2,7 +2,15 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ScanSearch, User, Bot, Loader2, Sparkles, AlertTriangle, CheckCircle, XCircle, GraduationCap } from "lucide-react"
+import ScanSearch from "lucide-react/dist/esm/icons/scan-search"
+import User from "lucide-react/dist/esm/icons/user"
+import Bot from "lucide-react/dist/esm/icons/bot"
+import Loader2 from "lucide-react/dist/esm/icons/loader-2"
+import Sparkles from "lucide-react/dist/esm/icons/sparkles"
+import AlertTriangle from "lucide-react/dist/esm/icons/alert-triangle"
+import CheckCircle from "lucide-react/dist/esm/icons/check-circle"
+import XCircle from "lucide-react/dist/esm/icons/x-circle"
+import GraduationCap from "lucide-react/dist/esm/icons/graduation-cap"
 
 // 示例文本
 const exampleTexts = [

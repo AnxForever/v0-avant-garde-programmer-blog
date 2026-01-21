@@ -1,7 +1,8 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Star, Zap } from "lucide-react"
+import Star from "lucide-react/dist/esm/icons/star"
+import Zap from "lucide-react/dist/esm/icons/zap"
 
 export function Marquee() {
   return (

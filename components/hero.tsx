@@ -1,7 +1,7 @@
 "use client"
 
 import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowDownRight } from "lucide-react"
+import ArrowDownRight from "lucide-react/dist/esm/icons/arrow-down-right"
 
 export function Hero() {
   const { scrollY } = useScroll()

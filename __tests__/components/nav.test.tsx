@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react"
 import { Nav } from "@/components/nav"
 import "@testing-library/jest-dom"
-import jest from "jest"
 
 // Mock usePathname
 jest.mock("next/navigation", () => ({
@@ -12,7 +11,10 @@ describe("Nav Component", () => {
   it("renders all navigation links", () => {
     render(<Nav />)
 
-    expect(screen.getByText("首页")).toBeInTheDocument() // Home
+    // Check for the logo/home link
+    expect(screen.getByText("DEV_AVANT_GARDE")).toBeInTheDocument()
+    
+    // Check for navigation links
     expect(screen.getByText("作品")).toBeInTheDocument() // Work
     expect(screen.getByText("关于")).toBeInTheDocument() // About
     expect(screen.getByText("博客")).toBeInTheDocument() // Blog

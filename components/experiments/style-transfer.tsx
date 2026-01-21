@@ -1,7 +1,11 @@
 "use client"
 
 import { useCallback, useState } from "react"
-import { Upload, Sparkles, RotateCw, Download, X } from "lucide-react"
+import Upload from "lucide-react/dist/esm/icons/upload"
+import Sparkles from "lucide-react/dist/esm/icons/sparkles"
+import RotateCw from "lucide-react/dist/esm/icons/rotate-cw"
+import Download from "lucide-react/dist/esm/icons/download"
+import X from "lucide-react/dist/esm/icons/x"
 import { motion, AnimatePresence } from "framer-motion"
 
 type ImageSlot = {

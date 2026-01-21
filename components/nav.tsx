@@ -4,7 +4,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { useState } from "react"
 import { usePathname } from "next/navigation"
-import { Command } from "lucide-react"
+import Command from "lucide-react/dist/esm/icons/command"
 
 const links = [
   { href: "/work", label: "作品", color: "hover:bg-accent-pink" },

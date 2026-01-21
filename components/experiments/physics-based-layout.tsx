@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { RotateCcw } from "lucide-react"
+import RotateCcw from "lucide-react/dist/esm/icons/rotate-ccw"
 import type Matter from "matter-js"
 
 export function PhysicsBasedLayout() {

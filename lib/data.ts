@@ -1,4 +1,12 @@
-import { Cpu, Layers, Mic, Zap, Type, Brain, Palette, ScanSearch, GraduationCap } from "lucide-react"
+import Cpu from "lucide-react/dist/esm/icons/cpu"
+import Layers from "lucide-react/dist/esm/icons/layers"
+import Mic from "lucide-react/dist/esm/icons/mic"
+import Zap from "lucide-react/dist/esm/icons/zap"
+import Type from "lucide-react/dist/esm/icons/type"
+import Brain from "lucide-react/dist/esm/icons/brain"
+import Palette from "lucide-react/dist/esm/icons/palette"
+import ScanSearch from "lucide-react/dist/esm/icons/scan-search"
+import GraduationCap from "lucide-react/dist/esm/icons/graduation-cap"
 
 export const posts = [
   {

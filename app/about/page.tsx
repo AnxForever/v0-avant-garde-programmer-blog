@@ -3,7 +3,10 @@
 import { useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
-import { ArrowDownRight, Code, Zap, Globe } from "lucide-react"
+import ArrowDownRight from "lucide-react/dist/esm/icons/arrow-down-right"
+import Code from "lucide-react/dist/esm/icons/code"
+import Zap from "lucide-react/dist/esm/icons/zap"
+import Globe from "lucide-react/dist/esm/icons/globe"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 

@@ -5,7 +5,10 @@ import { Footer } from "@/components/footer"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, ExternalLink, Github, Play } from "lucide-react"
+import ArrowLeft from "lucide-react/dist/esm/icons/arrow-left"
+import ExternalLink from "lucide-react/dist/esm/icons/external-link"
+import Github from "lucide-react/dist/esm/icons/github"
+import Play from "lucide-react/dist/esm/icons/play"
 
 interface Project {
   id: number

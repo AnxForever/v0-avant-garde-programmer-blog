@@ -3,7 +3,15 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, ArrowRight, Monitor, FileText, FlaskConical, User, Mail, Zap, type LucideIcon } from "lucide-react"
+import Search from "lucide-react/dist/esm/icons/search"
+import ArrowRight from "lucide-react/dist/esm/icons/arrow-right"
+import Monitor from "lucide-react/dist/esm/icons/monitor"
+import FileText from "lucide-react/dist/esm/icons/file-text"
+import FlaskConical from "lucide-react/dist/esm/icons/flask-conical"
+import User from "lucide-react/dist/esm/icons/user"
+import Mail from "lucide-react/dist/esm/icons/mail"
+import Zap from "lucide-react/dist/esm/icons/zap"
+import type { LucideIcon } from "lucide-react"
 
 type CommandItem = {
   icon: LucideIcon

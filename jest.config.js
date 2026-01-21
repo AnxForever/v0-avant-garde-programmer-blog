@@ -13,7 +13,13 @@ const customJestConfig = {
     "^@/components/(.*)$": "<rootDir>/components/$1",
     "^@/app/(.*)$": "<rootDir>/app/$1",
     "^@/lib/(.*)$": "<rootDir>/lib/$1",
+    // Mock lucide-react icons
+    "^lucide-react/dist/esm/icons/(.*)$": "<rootDir>/__mocks__/lucide-icon.js",
   },
+  // Transform lucide-react ES modules
+  transformIgnorePatterns: [
+    "node_modules/(?!(lucide-react)/)",
+  ],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

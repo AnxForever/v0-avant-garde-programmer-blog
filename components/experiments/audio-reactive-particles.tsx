@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { Mic, MicOff } from "lucide-react"
+import Mic from "lucide-react/dist/esm/icons/mic"
+import MicOff from "lucide-react/dist/esm/icons/mic-off"
 
 export function AudioReactiveParticles() {
   const canvasRef = useRef<HTMLCanvasElement>(null)

@@ -3,7 +3,7 @@
 import { Nav } from "@/components/nav"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import ArrowLeft from "lucide-react/dist/esm/icons/arrow-left"
 import { AudioReactiveParticles } from "@/components/experiments/audio-reactive-particles"
 import { GenerativeTypography } from "@/components/experiments/generative-typography"
 import { PhysicsBasedLayout } from "@/components/experiments/physics-based-layout"

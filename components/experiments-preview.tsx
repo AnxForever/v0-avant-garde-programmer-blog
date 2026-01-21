@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { experiments } from "@/lib/data"
-import { ArrowUpRight } from "lucide-react"
+import ArrowUpRight from "lucide-react/dist/esm/icons/arrow-up-right"
 
 export function ExperimentsPreview() {
   // 只显示前4个实验
