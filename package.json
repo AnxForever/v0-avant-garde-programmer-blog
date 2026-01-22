@@ -58,6 +58,7 @@
     "framer-motion": "latest",
     "input-otp": "1.4.1",
     "jest": "latest",
+    "lightningcss": "^1.31.1",
     "lucide-react": "^0.454.0",
     "matter-js": "latest",
     "next": "^16.1.1",
