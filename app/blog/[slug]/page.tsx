@@ -2,8 +2,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getCachedPost, getCachedPostSlugs, extractDescription } from "@/lib/blog-data"
 import { BlogPostContent } from "@/components/blog-post-content"
-
-const BASE_URL = 'https://anxforever-blog.vercel.app'
+import { BASE_URL } from "@/lib/url"
 
 interface PageProps {
   params: Promise<{ slug: string }>

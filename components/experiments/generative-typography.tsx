@@ -67,8 +67,9 @@ export function GenerativeTypography() {
           const distance = Math.sqrt(dx * dx + dy * dy)
           const maxDistance = 300
 
-          const distortionX = distance < maxDistance ? (dx / distance) * (maxDistance - distance) * 0.3 : 0
-          const distortionY = distance < maxDistance ? (dy / distance) * (maxDistance - distance) * 0.3 : 0
+          const safeDist = Math.max(distance, 1) // 防止除以零产生 NaN
+          const distortionX = distance < maxDistance ? (dx / safeDist) * (maxDistance - distance) * 0.3 : 0
+          const distortionY = distance < maxDistance ? (dy / safeDist) * (maxDistance - distance) * 0.3 : 0
 
           const rotation = distance < maxDistance ? ((maxDistance - distance) / maxDistance) * 15 : 0
           const scale = distance < maxDistance ? 1 + ((maxDistance - distance) / maxDistance) * 0.5 : 1

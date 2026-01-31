@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useState, useRef, useEffect } from "react"
 import Upload from "lucide-react/dist/esm/icons/upload"
 import Sparkles from "lucide-react/dist/esm/icons/sparkles"
 import RotateCw from "lucide-react/dist/esm/icons/rotate-cw"
@@ -38,6 +38,16 @@ export function StyleTransfer() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [result, setResult] = useState<string | null>(null)
   const [progress, setProgress] = useState(0)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  // 清理 interval
+  useEffect(() => {
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+      }
+    }
+  }, [])
 
   const handleImageUpload = useCallback((file: File, type: "content" | "style") => {
     const reader = new FileReader()
@@ -80,11 +90,19 @@ export function StyleTransfer() {
     setProgress(0)
     setResult(null)
 
+    // 清理之前的 interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+    }
+
     // 模拟处理进度
-    const interval = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
-          clearInterval(interval)
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current)
+            intervalRef.current = null
+          }
           setIsProcessing(false)
           // 使用内容图片作为"处理结果"（演示用）
           setResult(contentImage.preview)
@@ -96,6 +114,11 @@ export function StyleTransfer() {
   }, [contentImage])
 
   const reset = useCallback(() => {
+    // 清理 interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current)
+      intervalRef.current = null
+    }
     setContentImage({ preview: null, name: "" })
     setStyleImage({ preview: null, name: "" })
     setResult(null)

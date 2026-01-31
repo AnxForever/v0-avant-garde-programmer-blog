@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next'
+import { BASE_URL } from '@/lib/url'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://anxforever-blog.vercel.app'
-
   return {
     rules: [
       {
@@ -11,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/archive/'],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${BASE_URL}/sitemap.xml`,
   }
 }

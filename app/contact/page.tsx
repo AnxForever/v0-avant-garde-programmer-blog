@@ -16,7 +16,7 @@ interface FormErrors {
 
 export default function ContactPage() {
   const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" })
+  const [formData, setFormData] = useState({ name: "", email: "", message: "", website: "" })
   const [errors, setErrors] = useState<FormErrors>({})
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -46,7 +46,7 @@ export default function ContactPage() {
 
       if (response.ok && data.success) {
         setFormStatus("success")
-        setFormData({ name: "", email: "", message: "" })
+        setFormData({ name: "", email: "", message: "", website: "" })
       } else {
         setFormStatus("error")
         // 处理验证错误
@@ -134,6 +134,19 @@ export default function ContactPage() {
               </div>
             ) : (
               <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+                {/* Honeypot 字段 - 对用户不可见，机器人会填写 */}
+                <div className="absolute opacity-0 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
+                  <label htmlFor="website">Website</label>
+                  <input
+                    type="text"
+                    id="website"
+                    name="website"
+                    value={formData.website}
+                    onChange={handleChange}
+                    autoComplete="off"
+                  />
+                </div>
+
                 {/* 显示通用错误 */}
                 {errors.general && (
                   <div className="bg-red-50 border-2 border-red-500 p-4 text-red-600 font-mono text-sm">
@@ -150,7 +163,8 @@ export default function ContactPage() {
                     type="text"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="你的名字"
+                    placeholder="你的名字…"
+                    autoComplete="name"
                     className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors"
                   />
                 </div>
@@ -164,7 +178,9 @@ export default function ContactPage() {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="你的邮箱"
+                    placeholder="你的邮箱…"
+                    autoComplete="email"
+                    spellCheck={false}
                     className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors"
                   />
                 </div>
@@ -178,7 +194,8 @@ export default function ContactPage() {
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="告诉我一切..."
+                    placeholder="告诉我一切…"
+                    autoComplete="off"
                     className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors resize-none"
                   />
                 </div>

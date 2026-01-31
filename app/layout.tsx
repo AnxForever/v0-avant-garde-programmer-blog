@@ -6,17 +6,7 @@ import "./globals.css"
 import { CustomCursor } from "@/components/custom-cursor"
 import { ChaosModeToggle } from "@/components/chaos-mode-toggle"
 import { CommandPalette } from "@/components/command-palette"
-
-// const geist = Geist({
-//   subsets: ["latin"],
-//   variable: "--font-geist-sans",
-// })
-// const geistMono = Geist_Mono({
-//   subsets: ["latin"],
-//   variable: "--font-geist-mono",
-// })
-
-const BASE_URL = 'https://anxforever-blog.vercel.app'
+import { BASE_URL } from "@/lib/url"
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

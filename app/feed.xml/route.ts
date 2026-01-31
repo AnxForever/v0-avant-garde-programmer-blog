@@ -1,6 +1,5 @@
 import { posts } from '@/lib/data'
-
-const BASE_URL = 'https://anxforever-blog.vercel.app'
+import { BASE_URL } from '@/lib/url'
 
 export async function GET() {
   const feedItems = posts

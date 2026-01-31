@@ -1,14 +1,67 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { Nav } from "@/components/nav"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import ArrowLeft from "lucide-react/dist/esm/icons/arrow-left"
-import { AudioReactiveParticles } from "@/components/experiments/audio-reactive-particles"
-import { GenerativeTypography } from "@/components/experiments/generative-typography"
-import { PhysicsBasedLayout } from "@/components/experiments/physics-based-layout"
-import { StyleTransfer } from "@/components/experiments/style-transfer"
-import { AITextDetector } from "@/components/experiments/ai-text-detector"
+
+// 动态导入实验组件，避免一次性加载所有重型代码
+const AudioReactiveParticles = dynamic(
+  () => import("@/components/experiments/audio-reactive-particles").then((m) => m.AudioReactiveParticles),
+  {
+    loading: () => <ExperimentLoader />,
+    ssr: false,
+  }
+)
+
+const GenerativeTypography = dynamic(
+  () => import("@/components/experiments/generative-typography").then((m) => m.GenerativeTypography),
+  {
+    loading: () => <ExperimentLoader />,
+    ssr: false,
+  }
+)
+
+const PhysicsBasedLayout = dynamic(
+  () => import("@/components/experiments/physics-based-layout").then((m) => m.PhysicsBasedLayout),
+  {
+    loading: () => <ExperimentLoader />,
+    ssr: false,
+  }
+)
+
+const StyleTransfer = dynamic(
+  () => import("@/components/experiments/style-transfer").then((m) => m.StyleTransfer),
+  {
+    loading: () => <ExperimentLoader />,
+    ssr: false,
+  }
+)
+
+const AITextDetector = dynamic(
+  () => import("@/components/experiments/ai-text-detector").then((m) => m.AITextDetector),
+  {
+    loading: () => <ExperimentLoader />,
+    ssr: false,
+  }
+)
+
+// 加载状态组件
+function ExperimentLoader() {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center bg-black">
+      <div className="text-center">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
+          className="w-16 h-16 border-4 border-accent-green border-t-transparent rounded-full mx-auto mb-4"
+        />
+        <p className="font-mono text-gray-400 text-sm">加载实验中...</p>
+      </div>
+    </div>
+  )
+}
 
 // 注意：不包含 icon 属性，因为 Lucide 图标是函数，无法从服务端传递
 interface Experiment {

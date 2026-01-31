@@ -13,6 +13,8 @@ export function PhysicsBasedLayout() {
   const bodiesRef = useRef<Matter.Body[]>([])
 
   useEffect(() => {
+    let cleanup: (() => void) | undefined
+
     const loadMatter = async () => {
       const Matter = (await import("matter-js")).default
 
@@ -103,15 +105,21 @@ export function PhysicsBasedLayout() {
       runnerRef.current = runner
       Runner.run(runner, engine)
 
-      return () => {
+      cleanup = () => {
         Render.stop(render)
         Runner.stop(runner)
         World.clear(engine.world, false)
         Engine.clear(engine)
+        render.canvas.remove()
+        render.textures = {}
       }
     }
 
     loadMatter()
+
+    return () => {
+      cleanup?.()
+    }
   }, [])
 
   const reset = async () => {

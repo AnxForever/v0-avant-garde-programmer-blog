@@ -47,9 +47,10 @@ export function Nav() {
         {/* Command Palette Trigger */}
         <button
           onClick={() => document.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }))}
+          aria-label="打开命令面板 (Cmd+K)"
           className="ml-4 flex items-center gap-2 font-bold text-xs border-2 border-black px-3 py-2 bg-gray-100 hover:bg-black hover:text-white transition-colors shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none"
         >
-          <Command className="w-4 h-4" />
+          <Command className="w-4 h-4" aria-hidden="true" />
           <span>CMD+K</span>
         </button>
       </div>
@@ -58,6 +59,9 @@ export function Nav() {
       <button
         className="md:hidden font-black text-xs tracking-widest border-2 border-black px-3 py-2 bg-accent-yellow shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all"
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? "关闭导航菜单" : "打开导航菜单"}
+        aria-expanded={isOpen}
+        aria-controls="mobile-menu"
       >
         {isOpen ? "关闭" : "菜单"}
       </button>
@@ -68,6 +72,9 @@ export function Nav() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
+          id="mobile-menu"
+          role="navigation"
+          aria-label="移动端导航菜单"
           className="absolute top-full left-0 right-0 mt-2 bg-white border-2 md:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] p-3 flex flex-col gap-2"
         >
           {links.map((link) => (

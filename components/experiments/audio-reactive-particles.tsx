@@ -11,6 +11,7 @@ export function AudioReactiveParticles() {
   const audioContextRef = useRef<AudioContext | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
   const animationRef = useRef<number | null>(null)
+  const streamRef = useRef<MediaStream | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -89,6 +90,13 @@ export function AudioReactiveParticles() {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
+      // 清理音频资源（组件卸载时）
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop())
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close()
+      }
     }
   }, [isListening])
 
@@ -96,6 +104,7 @@ export function AudioReactiveParticles() {
     if (!isListening) {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+        streamRef.current = stream
         const audioContext = new AudioContext()
         const analyser = audioContext.createAnalyser()
         const source = audioContext.createMediaStreamSource(stream)
@@ -112,6 +121,11 @@ export function AudioReactiveParticles() {
         console.error("Microphone access error:", err)
       }
     } else {
+      // 停止所有 MediaStream tracks（关闭麦克风指示灯）
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop())
+        streamRef.current = null
+      }
       if (audioContextRef.current) {
         audioContextRef.current.close()
         audioContextRef.current = null

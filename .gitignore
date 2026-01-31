@@ -58,6 +58,9 @@ Thumbs.db
 # Claude Code
 .claude/
 
+# Agent Skills
+.agents/
+
 # BMad Method Framework
 .bmad-core/
 .claude/commands/BMad/

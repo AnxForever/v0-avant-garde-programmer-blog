@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
 import { posts, projects, experiments } from '@/lib/data'
-
-const BASE_URL = 'https://anxforever-blog.vercel.app'
+import { BASE_URL } from '@/lib/url'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // 静态页面
