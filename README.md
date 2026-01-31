@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/og-image.png" alt="Anx Forever Blog" width="100%">
+  <img src="public/og-image.png" alt="Anx Forever Blog" width="100%">
 </p>
 
 <h1 align="center">Anx Forever Blog</h1>
@@ -79,7 +79,7 @@
 
 | 首页 | 关于页 | 作品页 |
 |:---:|:---:|:---:|
-| ![Home](./public/placeholder.jpg) | ![About](./public/placeholder.jpg) | ![Work](./public/placeholder.jpg) |
+| ![Home](public/placeholder.jpg) | ![About](public/placeholder.jpg) | ![Work](public/placeholder.jpg) |
 
 ## 🚀 快速开始
 
