@@ -70,6 +70,15 @@
 - **物理引擎布局** - 基于 Matter.js 的实验性交互组件
 - **音频反应粒子** - Web Audio API 驱动的视觉效果
 - **生成式排版** - 鼠标交互的动态文字效果
+- **AI 文本检测** - 集成实验性 AI 模型探测功能
+- **风格迁移预览** - 实时视觉风格变换实验
+
+### 🔍 SEO & 发现性
+
+- **动态 RSS Feed** - 自动生成 `/feed.xml`
+- **自动化 Sitemap** - 完整的站点地图生成
+- **SEO 优化** - 针对 Next.js 16 的元数据配置
+- **语义化 HTML** - 提升无障碍访问与搜索排名
 
 ## 🌐 在线预览
 
@@ -92,10 +101,10 @@
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/AnxForever/v0-avant-garde-programmer-blog.git
+git clone https://github.com/AnxForever/Anxforever-blog.git
 
 # 2. 进入目录
-cd v0-avant-garde-programmer-blog
+cd Anxforever-blog
 
 # 3. 安装依赖
 npm install
@@ -128,6 +137,8 @@ npm run analyze      # 分析打包体积（需设置 ANALYZE=true）
 | [React](https://react.dev/) | 19.x | UI 库 |
 | [TypeScript](https://www.typescriptlang.org/) | 5.x | 类型安全的 JavaScript |
 | [Tailwind CSS](https://tailwindcss.com/) | 4.x | 原子化 CSS 框架 |
+| [Recharts](https://recharts.org/) | 2.x | 响应式数据可视化图表 |
+| [React Markdown](https://github.com/remarkjs/react-markdown) | 10.x | Markdown 渲染引擎 |
 
 ### 动画与交互
 
@@ -162,8 +173,12 @@ v0-avant-garde-programmer-blog/
 │   │   ├── page.tsx          # 实验列表
 │   │   └── [slug]/           # 实验详情（动态路由）
 │   ├── contact/               # 联系页面
+│   ├── feed.xml/              # RSS Feed
+│   ├── api/                   # API 路由
 │   ├── layout.tsx             # 根布局
 │   ├── template.tsx           # 页面转场模板
+│   ├── sitemap.ts             # 站点地图
+│   ├── robots.ts              # Robots 协议
 │   └── globals.css            # 全局样式
 ├── components/                 # React 组件
 │   ├── nav.tsx                # 导航栏
