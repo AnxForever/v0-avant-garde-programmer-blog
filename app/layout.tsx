@@ -5,6 +5,7 @@ import "./globals.css"
 import { CustomCursor } from "@/components/custom-cursor"
 import { ChaosModeToggle } from "@/components/chaos-mode-toggle"
 import { CommandPalette } from "@/components/command-palette"
+import { PageTransitionOverlay } from "@/components/page-transition"
 import { BASE_URL } from "@/lib/url"
 
 // Font configuration with display swap for better LCP
@@ -88,6 +89,7 @@ export default function RootLayout({
         <CustomCursor />
         <ChaosModeToggle />
         <CommandPalette />
+        <PageTransitionOverlay />
         {children}
       </body>
     </html>
