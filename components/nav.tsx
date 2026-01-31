@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { useState } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { usePathname } from "next/navigation"
 import Command from "lucide-react/dist/esm/icons/command"
 
@@ -17,6 +17,50 @@ const links = [
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const menuRef = useRef<HTMLDivElement>(null)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+
+  // 关闭菜单时聚焦回切换按钮
+  const closeMenu = useCallback(() => {
+    setIsOpen(false)
+    toggleRef.current?.focus()
+  }, [])
+
+  // 焦点陷阱 + Escape 关闭
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeMenu()
+        return
+      }
+
+      if (e.key === "Tab" && menuRef.current) {
+        const focusable = menuRef.current.querySelectorAll<HTMLElement>("a, button")
+        if (focusable.length === 0) return
+
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown)
+
+    // 打开时自动聚焦第一个链接
+    const firstLink = menuRef.current?.querySelector<HTMLElement>("a")
+    firstLink?.focus()
+
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [isOpen, closeMenu])
 
   return (
     <nav className="fixed top-2 md:top-4 left-2 md:left-4 right-2 md:right-4 z-50 bg-white border-2 md:border-4 border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] md:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-3 md:px-8 py-2 md:py-4 flex justify-between items-center max-w-7xl mx-auto">
@@ -57,6 +101,7 @@ export function Nav() {
 
       {/* Mobile Nav Toggle */}
       <button
+        ref={toggleRef}
         className="md:hidden font-black text-xs tracking-widest border-2 border-black px-3 py-2 bg-accent-yellow shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all"
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? "关闭导航菜单" : "打开导航菜单"}
@@ -69,6 +114,7 @@ export function Nav() {
       {/* Mobile Menu Overlay */}
       {isOpen && (
         <motion.div
+          ref={menuRef}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}

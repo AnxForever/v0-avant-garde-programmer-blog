@@ -63,7 +63,7 @@ export function Hero() {
           className="h-3 md:h-6 bg-accent-green border-2 md:border-4 border-black w-full my-1 md:my-2 origin-left"
         />
 
-        <motion.h1
+        <motion.h2
           initial={prefersReducedMotion ? undefined : { y: 100, opacity: 0 }}
           animate={prefersReducedMotion ? undefined : { y: 0, opacity: 1 }}
           transition={prefersReducedMotion ? undefined : { delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -73,7 +73,7 @@ export function Hero() {
           <span className="inline-block bg-accent-orange text-white px-2 md:px-4 border-2 md:border-4 border-black mx-1 md:mx-2 text-[12vw] md:text-[12vw]">CH</span>
           <span className="inline-block bg-accent-blue text-white px-2 md:px-4 border-2 md:border-4 border-black text-[12vw] md:text-[12vw]">E</span>
           <span className="inline-block text-stroke ml-1 md:ml-2 text-[12vw] md:text-[12vw]">MIST</span>
-        </motion.h1>
+        </motion.h2>
       </div>
 
       {/* 代码块 - 移动端简化 */}

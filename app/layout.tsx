@@ -1,12 +1,24 @@
 import type React from "react"
 import type { Metadata } from "next"
-// Temporarily disabled for Lighthouse testing due to Google Fonts network issues
-// import { Geist, Geist_Mono } from "next/font/google"
+import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { CustomCursor } from "@/components/custom-cursor"
 import { ChaosModeToggle } from "@/components/chaos-mode-toggle"
 import { CommandPalette } from "@/components/command-palette"
 import { BASE_URL } from "@/lib/url"
+
+// Font configuration with display swap for better LCP
+const geistSans = Geist({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-sans",
+})
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-mono",
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -71,7 +83,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="zh-CN" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="font-sans antialiased">
         <CustomCursor />
         <ChaosModeToggle />

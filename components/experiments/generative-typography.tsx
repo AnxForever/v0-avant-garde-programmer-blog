@@ -1,14 +1,24 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 
 export function GenerativeTypography() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [windowSize, setWindowSize] = useState({ width: 800, height: 600 })
 
+  // RAF 节流优化
+  const rafRef = useRef<number | null>(null)
+  const pendingMousePos = useRef({ x: 0, y: 0 })
+
   const text = "前卫编程美学"
   const letters = text.split("")
+
+  // 使用 RAF 节流更新鼠标位置
+  const updateMousePos = useCallback(() => {
+    setMousePos({ ...pendingMousePos.current })
+    rafRef.current = null
+  }, [])
 
   useEffect(() => {
     // 初始化窗口尺寸
@@ -21,26 +31,36 @@ export function GenerativeTypography() {
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return
       const rect = containerRef.current.getBoundingClientRect()
-      setMousePos({
+
+      // 存储待处理的鼠标位置
+      pendingMousePos.current = {
         x: e.clientX - rect.left,
         y: e.clientY - rect.top,
-      })
+      }
+
+      // 使用 RAF 节流，确保每帧最多更新一次
+      if (!rafRef.current) {
+        rafRef.current = requestAnimationFrame(updateMousePos)
+      }
     }
 
     const container = containerRef.current
     if (container) {
-      container.addEventListener("mousemove", handleMouseMove)
+      container.addEventListener("mousemove", handleMouseMove, { passive: true })
     }
 
-    window.addEventListener("resize", handleResize)
+    window.addEventListener("resize", handleResize, { passive: true })
 
     return () => {
       if (container) {
         container.removeEventListener("mousemove", handleMouseMove)
       }
       window.removeEventListener("resize", handleResize)
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
     }
-  }, [])
+  }, [updateMousePos])
 
   return (
     <div

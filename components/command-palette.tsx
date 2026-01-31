@@ -53,7 +53,15 @@ const commandGroups = [
 export function CommandPalette() {
   const [open, setOpen] = React.useState(false)
   const [query, setQuery] = React.useState("")
+  const [selectedIndex, setSelectedIndex] = React.useState(0)
   const router = useRouter()
+
+  // 获取所有扁平化的命令项
+  const getAllItems = React.useCallback(() => {
+    return commandGroups
+      .flatMap((group) => group.items)
+      .filter((item) => item.label.toLowerCase().includes(query.toLowerCase()))
+  }, [query])
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -70,6 +78,11 @@ export function CommandPalette() {
     return () => document.removeEventListener("keydown", down)
   }, [])
 
+  // 重置选中索引当搜索词改变时
+  React.useEffect(() => {
+    setSelectedIndex(0)
+  }, [query])
+
   const filteredCommands = commandGroups
     .map((group) => ({
       ...group,
@@ -79,12 +92,40 @@ export function CommandPalette() {
 
   const handleSelect = (item: CommandItem) => {
     setOpen(false)
+    setQuery("")
+    setSelectedIndex(0)
     if (item.href) {
       router.push(item.href)
     } else if (item.action) {
       item.action()
     }
   }
+
+  // 键盘导航处理
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    const items = getAllItems()
+    if (items.length === 0) return
+
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault()
+        setSelectedIndex((i) => Math.min(i + 1, items.length - 1))
+        break
+      case "ArrowUp":
+        e.preventDefault()
+        setSelectedIndex((i) => Math.max(i - 1, 0))
+        break
+      case "Enter":
+        e.preventDefault()
+        if (items[selectedIndex]) {
+          handleSelect(items[selectedIndex])
+        }
+        break
+    }
+  }
+
+  // 计算当前项在扁平列表中的索引
+  let flatIndex = 0
 
   return (
     <AnimatePresence>
@@ -117,6 +158,7 @@ export function CommandPalette() {
                 placeholder="Type a command…"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
                 autoFocus
                 autoComplete="off"
                 spellCheck={false}
@@ -132,22 +174,31 @@ export function CommandPalette() {
                 filteredCommands.map((group, i) => (
                   <div key={i} className="mb-4" role="group" aria-label={group.category}>
                     <div className="px-2 py-1 text-xs font-black text-gray-500 mb-2">{group.category}</div>
-                    {group.items.map((item, j) => (
-                      <button
-                        key={j}
-                        onClick={() => handleSelect(item)}
-                        role="option"
-                        className="w-full flex items-center p-3 hover:bg-gray-100 border-2 border-transparent hover:border-black transition-all group"
-                      >
-                        <div
-                          className={`p-2 border-2 border-black mr-4 ${item.color} shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-none transition-all`}
+                    {group.items.map((item, j) => {
+                      const currentIndex = flatIndex++
+                      const isSelected = currentIndex === selectedIndex
+                      return (
+                        <button
+                          key={j}
+                          onClick={() => handleSelect(item)}
+                          role="option"
+                          aria-selected={isSelected}
+                          className={`w-full flex items-center p-3 border-2 transition-all group ${
+                            isSelected
+                              ? "bg-gray-100 border-black"
+                              : "hover:bg-gray-100 border-transparent hover:border-black"
+                          }`}
                         >
-                          <item.icon className="w-5 h-5" aria-hidden="true" />
-                        </div>
-                        <span className="font-bold text-lg uppercase">{item.label}</span>
-                        <ArrowRight className="ml-auto w-5 h-5 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
-                      </button>
-                    ))}
+                          <div
+                            className={`p-2 border-2 border-black mr-4 ${item.color} shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-none transition-all`}
+                          >
+                            <item.icon className="w-5 h-5" aria-hidden="true" />
+                          </div>
+                          <span className="font-bold text-lg uppercase">{item.label}</span>
+                          <ArrowRight className={`ml-auto w-5 h-5 transition-opacity ${isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} aria-hidden="true" />
+                        </button>
+                      )
+                    })}
                   </div>
                 ))
               )}
