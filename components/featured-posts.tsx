@@ -3,38 +3,12 @@
 import { motion } from "framer-motion"
 import ArrowUpRight from "lucide-react/dist/esm/icons/arrow-up-right"
 import Link from "next/link"
+import { posts } from "@/lib/data"
 
-// 提升到模块级别，避免每次渲染重建
-const posts = [
-  {
-    id: 1,
-    title: "Breaking the Grid",
-    category: "CSS / DESIGN",
-    date: "2025.05.21",
-    slug: "breaking-the-grid",
-  },
-  {
-    id: 2,
-    title: "The Future of React",
-    category: "ENGINEERING",
-    date: "2025.05.18",
-    slug: "future-of-react",
-  },
-  {
-    id: 3,
-    title: "Generative Art 101",
-    category: "CREATIVE CODING",
-    date: "2025.05.10",
-    slug: "generative-art-101",
-  },
-  {
-    id: 4,
-    title: "Maximalism Rising",
-    category: "OPINION",
-    date: "2025.05.01",
-    slug: "maximalism-rising",
-  },
-] as const
+// 获取最新 4 篇文章（按 id 降序，排除毕业设计）
+const featuredPosts = posts
+  .filter((p) => !p.isGraduation)
+  .slice(0, 4)
 
 const decorColors = [
   { line: "border-accent-pink", gradient: "from-accent-pink to-accent-orange", tag: "bg-accent-pink/10 text-accent-pink" },
@@ -85,9 +59,9 @@ export function FeaturedPosts() {
 
         {/* 卡片网格 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {posts.map((post, index) => {
+          {featuredPosts.map((post, index) => {
             const colors = decorColors[index % decorColors.length]
-            
+
             return (
               <Link key={post.id} href={`/blog/${post.slug}`}>
                 <motion.div

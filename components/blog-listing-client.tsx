@@ -2,7 +2,7 @@
 
 import { useState, lazy, Suspense } from 'react'
 import Link from 'next/link'
-import type { Post } from '@/lib/blog-data'
+import type { PostListItem } from '@/lib/blog-data'
 import { useReducedMotion } from '@/lib/use-reduced-motion'
 
 // Dynamic imports for animation components
@@ -12,7 +12,7 @@ const ExpandButton = lazy(() => import('@/components/expand-button'))
 const INITIAL_DISPLAY_COUNT = 4
 
 interface BlogListingClientProps {
-  posts: Post[]
+  posts: PostListItem[]
 }
 
 /**
@@ -75,7 +75,7 @@ export function BlogListingClient({ posts }: BlogListingClientProps) {
  * Static post list fallback that matches the dimensions of animated cards
  * Prevents CLS by maintaining the same layout structure
  */
-function StaticPostList({ posts }: { posts: Post[] }) {
+function StaticPostList({ posts }: { posts: PostListItem[] }) {
   return (
     <>
       {posts.map((post) => (
@@ -91,7 +91,7 @@ function StaticPostList({ posts }: { posts: Post[] }) {
  * Static blog card that matches the exact dimensions and styling of AnimatedBlogCard
  * Uses CSS transitions instead of framer-motion for progressive enhancement
  */
-function StaticBlogCard({ post }: { post: Post }) {
+function StaticBlogCard({ post }: { post: PostListItem }) {
   return (
     <div className="group relative bg-white border-2 md:border-4 border-black p-4 md:p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(255,0,255,1)] md:hover:shadow-[16px_16px_0px_0px_rgba(255,0,255,1)] hover:-translate-y-1 md:hover:-translate-y-2 transition-all duration-300">
       <div className="absolute top-0 right-0 bg-black text-white px-2 md:px-4 py-1 md:py-2 font-mono text-xs md:text-sm transform translate-x-1 md:translate-x-2 -translate-y-1 md:-translate-y-2 group-hover:bg-accent-yellow group-hover:text-black transition-colors border-2 border-transparent group-hover:border-black">

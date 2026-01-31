@@ -90,6 +90,8 @@ export function ProjectContent({ project }: ProjectContentProps) {
                       className="w-full h-full"
                       title={`${project.title} Demo`}
                       loading="lazy"
+                      sandbox="allow-scripts allow-same-origin allow-forms"
+                      referrerPolicy="no-referrer"
                     />
                   </div>
                   <p className="mt-2 text-sm text-gray-500 font-mono text-center">

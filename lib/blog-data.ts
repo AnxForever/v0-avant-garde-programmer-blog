@@ -12,11 +12,38 @@ export interface Post {
 }
 
 /**
- * Cached function to get all posts
+ * Post metadata for list views (without content to reduce RSC payload)
+ */
+export interface PostListItem {
+  id: number
+  title: string
+  category: string
+  date: string
+  slug: string
+  isGraduation?: boolean
+}
+
+/**
+ * Cached function to get all posts (full content)
  * Uses React.cache() to deduplicate requests within a single render
  */
 export const getCachedPosts = cache((): Post[] => {
   return posts
+})
+
+/**
+ * Cached function to get posts for list views (metadata only, no content)
+ * Reduces RSC payload size by stripping content field
+ */
+export const getCachedPostsForList = cache((): PostListItem[] => {
+  return posts.map(({ id, title, category, date, slug, isGraduation }) => ({
+    id,
+    title,
+    category,
+    date,
+    slug,
+    isGraduation,
+  }))
 })
 
 /**

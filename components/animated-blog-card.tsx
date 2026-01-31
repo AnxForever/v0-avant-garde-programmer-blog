@@ -3,15 +3,15 @@
 import { memo } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import type { Post } from '@/lib/blog-data'
+import type { PostListItem } from '@/lib/blog-data'
 
 interface AnimatedBlogCardProps {
-  post: Post
+  post: PostListItem
   index: number
 }
 
 // Static content extracted outside motion wrapper to prevent unnecessary re-renders
-function BlogCardContent({ post }: { post: Post }) {
+function BlogCardContent({ post }: { post: PostListItem }) {
   return (
     <>
       <div className="absolute top-0 right-0 bg-black text-white px-2 md:px-4 py-1 md:py-2 font-mono text-xs md:text-sm transform translate-x-1 md:translate-x-2 -translate-y-1 md:-translate-y-2 group-hover:bg-accent-yellow group-hover:text-black transition-colors border-2 border-transparent group-hover:border-black">

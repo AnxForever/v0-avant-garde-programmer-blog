@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
-import { getCachedPosts, type Post } from "@/lib/blog-data"
+import { getCachedPostsForList, type PostListItem } from "@/lib/blog-data"
 import { BlogListingClient } from "@/components/blog-listing-client"
 import Link from "next/link"
 
@@ -11,7 +11,7 @@ export const metadata = {
 }
 
 export default function BlogPage() {
-  const posts = getCachedPosts()
+  const posts = getCachedPostsForList()
 
   return (
     <main className="min-h-screen bg-white selection:bg-accent-pink selection:text-white">
@@ -36,7 +36,7 @@ export default function BlogPage() {
 
 // Fallback shows static content while animations load
 // Prevents CLS by showing the same layout structure as the final content
-function BlogListingFallback({ posts }: { posts: Post[] }) {
+function BlogListingFallback({ posts }: { posts: PostListItem[] }) {
   return (
     <div className="grid grid-cols-1 gap-4 md:gap-8">
       {posts.slice(0, 4).map((post) => (
@@ -51,7 +51,7 @@ function BlogListingFallback({ posts }: { posts: Post[] }) {
  * Matches the exact dimensions and styling of AnimatedBlogCard to prevent CLS
  * Uses CSS transitions for progressive enhancement
  */
-function StaticBlogCard({ post }: { post: Post }) {
+function StaticBlogCard({ post }: { post: PostListItem }) {
   return (
     <Link href={`/blog/${post.slug}`}>
       <div className="group relative bg-white border-2 md:border-4 border-black p-4 md:p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(255,0,255,1)] md:hover:shadow-[16px_16px_0px_0px_rgba(255,0,255,1)] hover:-translate-y-1 md:hover:-translate-y-2 transition-all duration-300">
