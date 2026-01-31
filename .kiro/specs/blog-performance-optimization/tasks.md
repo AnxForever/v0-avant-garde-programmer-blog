@@ -280,7 +280,7 @@ Each task builds on previous work and includes checkpoints to ensure stability b
     - Document results in performance report
     - _Requirements: 1.4_
 
-  - [~] 11.3 Add performance monitoring to production
+  - [ ] 11.3 Add performance monitoring to production
     - Verify Vercel Analytics is configured
     - Add custom performance marks for animation loading
     - Set up Core Web Vitals tracking
