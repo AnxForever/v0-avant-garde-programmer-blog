@@ -164,7 +164,13 @@ export function CommandPalette() {
                 spellCheck={false}
               />
               <div className="hidden md:flex gap-2">
-                <kbd className="px-2 py-1 bg-gray-100 border-2 border-black text-xs font-bold">ESC</kbd>
+                <button
+                  onClick={() => setOpen(false)}
+                  className="px-2 py-1 bg-gray-100 border-2 border-black text-xs font-bold hover:bg-gray-200 transition-colors cursor-pointer"
+                  aria-label="关闭命令面板"
+                >
+                  ESC
+                </button>
               </div>
             </div>
             <div className="max-h-[60vh] overflow-y-auto p-2" role="listbox" aria-label="命令列表">
