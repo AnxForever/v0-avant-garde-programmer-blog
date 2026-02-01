@@ -4,197 +4,204 @@ import { usePathname } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { useEffect, useState, useRef } from "react"
 import { useReducedMotion } from "@/lib/use-reduced-motion"
-import {
-  getTransitionType,
-  getRouteColors,
-  type TransitionType,
-} from "./transitions/config"
-import {
-  geometricWipeVariants,
-  diagonalRevealVariants,
-  splitHorizontalVariants,
-  slideStackVariants,
-} from "./transitions/variants"
 
-interface OverlayColors {
-  overlay: string
-  accent: string
+// 路由显示名称
+const routeNames: Record<string, string> = {
+  "/": "HOME",
+  "/blog": "BLOG",
+  "/work": "WORK",
+  "/lab": "LAB",
+  "/about": "ABOUT",
+  "/contact": "CONTACT",
+}
+
+// 路由强调色
+const routeAccents: Record<string, string> = {
+  "/": "#ff006e",
+  "/blog": "#00d9ff",
+  "/work": "#ff006e",
+  "/lab": "#ccff00",
+  "/about": "#ccff00",
+  "/contact": "#ff6b00",
+}
+
+const COLUMN_COUNT = 5
+const STAGGER_DELAY = 0.06
+
+function getRouteName(pathname: string): string {
+  // 详情页显示父路由名
+  const match = pathname.match(/^\/(blog|work|lab)\//)
+  if (match) {
+    const parent = `/${match[1]}`
+    return routeNames[parent] || "PAGE"
+  }
+  return routeNames[pathname] || "PAGE"
+}
+
+function getRouteAccent(pathname: string): string {
+  const base = "/" + (pathname.split("/")[1] || "")
+  return routeAccents[base] || "#ff006e"
 }
 
 export function PageTransitionOverlay() {
   const pathname = usePathname()
   const [isTransitioning, setIsTransitioning] = useState(false)
-  const [transitionType, setTransitionType] = useState<TransitionType>("geometric-wipe")
-  const [colors, setColors] = useState<OverlayColors>({ overlay: "#1a1a1a", accent: "rgba(255, 0, 110, 0.15)" })
+  const [displayName, setDisplayName] = useState("HOME")
+  const [accent, setAccent] = useState("#ff006e")
   const prefersReducedMotion = useReducedMotion()
   const isFirstMount = useRef(true)
 
   useEffect(() => {
-    // 首次加载不触发转场
     if (isFirstMount.current) {
       isFirstMount.current = false
       return
     }
-
     if (prefersReducedMotion) return
 
-    // 根据路由确定转场类型和颜色
-    setTransitionType(getTransitionType(pathname))
-    setColors(getRouteColors(pathname))
+    setDisplayName(getRouteName(pathname))
+    setAccent(getRouteAccent(pathname))
     setIsTransitioning(true)
 
-    // 根据转场类型调整持续时间
-    const duration = transitionType === "perspective-zoom" ? 900 : 750
-    const timer = setTimeout(() => setIsTransitioning(false), duration)
+    const timer = setTimeout(() => setIsTransitioning(false), 1200)
     return () => clearTimeout(timer)
-  }, [pathname, prefersReducedMotion, transitionType])
+  }, [pathname, prefersReducedMotion])
 
   if (prefersReducedMotion) return null
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isTransitioning && (
-        <TransitionLayers
+        <div
           key={pathname}
-          type={transitionType}
-          colors={colors}
-        />
+          className="fixed inset-0 z-[60] pointer-events-none"
+          aria-hidden="true"
+        >
+          {/* 竖条百叶窗 */}
+          {Array.from({ length: COLUMN_COUNT }).map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ scaleY: 0 }}
+              animate={{
+                scaleY: [0, 1, 1, 0],
+              }}
+              transition={{
+                duration: 1.1,
+                times: [0, 0.35, 0.65, 1],
+                ease: [0.22, 1, 0.36, 1],
+                delay: i * STAGGER_DELAY,
+              }}
+              style={{
+                position: "absolute",
+                left: `${(i / COLUMN_COUNT) * 100}%`,
+                width: `${100 / COLUMN_COUNT + 0.5}%`,
+                top: 0,
+                bottom: 0,
+                backgroundColor: "#1a1a1a",
+                transformOrigin: "bottom",
+              }}
+            />
+          ))}
+
+          {/* 强调色竖条（更细，交错偏移） */}
+          {Array.from({ length: COLUMN_COUNT }).map((_, i) => (
+            <motion.div
+              key={`accent-${i}`}
+              initial={{ scaleY: 0 }}
+              animate={{
+                scaleY: [0, 1, 1, 0],
+              }}
+              transition={{
+                duration: 1.0,
+                times: [0, 0.35, 0.6, 1],
+                ease: [0.22, 1, 0.36, 1],
+                delay: i * STAGGER_DELAY + 0.04,
+              }}
+              style={{
+                position: "absolute",
+                left: `${(i / COLUMN_COUNT) * 100 + 1}%`,
+                width: `${100 / COLUMN_COUNT * 0.15}%`,
+                top: 0,
+                bottom: 0,
+                backgroundColor: accent,
+                transformOrigin: "bottom",
+                opacity: 0.6,
+              }}
+            />
+          ))}
+
+          {/* 路由名称文字 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: [0, 1, 1, 0],
+              y: [20, 0, 0, -20],
+            }}
+            transition={{
+              duration: 1.1,
+              times: [0, 0.3, 0.65, 1],
+              ease: [0.22, 1, 0.36, 1],
+              delay: COLUMN_COUNT * STAGGER_DELAY * 0.5,
+            }}
+            className="absolute inset-0 z-[62] flex items-center justify-center"
+          >
+            <span
+              className="font-black text-[15vw] md:text-[12vw] tracking-tighter leading-none select-none"
+              style={{
+                color: accent,
+                textShadow: `0 0 40px ${accent}40`,
+              }}
+            >
+              {displayName}
+            </span>
+          </motion.div>
+
+          {/* 底部装饰线 */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{
+              scaleX: [0, 1, 1, 0],
+            }}
+            transition={{
+              duration: 1.0,
+              times: [0, 0.4, 0.6, 1],
+              ease: [0.22, 1, 0.36, 1],
+              delay: 0.1,
+            }}
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: "15%",
+              height: "4px",
+              backgroundColor: accent,
+              transformOrigin: "left",
+            }}
+          />
+
+          {/* 顶部装饰线 */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{
+              scaleX: [0, 1, 1, 0],
+            }}
+            transition={{
+              duration: 1.0,
+              times: [0, 0.4, 0.6, 1],
+              ease: [0.22, 1, 0.36, 1],
+              delay: 0.15,
+            }}
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              top: "15%",
+              height: "4px",
+              backgroundColor: accent,
+              transformOrigin: "right",
+            }}
+          />
+        </div>
       )}
     </AnimatePresence>
   )
-}
-
-interface TransitionLayersProps {
-  type: TransitionType
-  colors: OverlayColors
-}
-
-function TransitionLayers({ type, colors }: TransitionLayersProps) {
-  const baseStyles = "fixed inset-0 z-[60] pointer-events-none"
-  const containStyles = { contain: "layout paint" as const }
-
-  switch (type) {
-    case "geometric-wipe":
-      return (
-        <>
-          {/* 底层 - 深色 */}
-          <motion.div
-            variants={geometricWipeVariants.layer1}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{ backgroundColor: colors.overlay, willChange: "clip-path", ...containStyles }}
-            className={baseStyles}
-            aria-hidden="true"
-          />
-          {/* 顶层 - 强调色叠加 */}
-          <motion.div
-            variants={geometricWipeVariants.layer2}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{ backgroundColor: colors.accent, willChange: "clip-path", ...containStyles }}
-            className={`${baseStyles} z-[61]`}
-            aria-hidden="true"
-          />
-        </>
-      )
-
-    case "diagonal-reveal":
-      return (
-        <>
-          <motion.div
-            variants={diagonalRevealVariants.overlay}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{ backgroundColor: colors.overlay, willChange: "clip-path", ...containStyles }}
-            className={baseStyles}
-            aria-hidden="true"
-          />
-          <motion.div
-            variants={diagonalRevealVariants.overlay}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{
-              backgroundColor: colors.accent,
-              willChange: "clip-path",
-              ...containStyles,
-            }}
-            className={`${baseStyles} z-[61]`}
-            transition={{ delay: 0.06 }}
-            aria-hidden="true"
-          />
-        </>
-      )
-
-    case "split-horizontal":
-      return (
-        <>
-          {/* 上半部分 */}
-          <motion.div
-            variants={splitHorizontalVariants.top}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{
-              backgroundColor: colors.overlay,
-              willChange: "transform",
-              ...containStyles,
-              height: "50%",
-              top: 0,
-            }}
-            className={`${baseStyles} !bottom-auto`}
-            aria-hidden="true"
-          />
-          {/* 下半部分 */}
-          <motion.div
-            variants={splitHorizontalVariants.bottom}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{
-              backgroundColor: colors.accent,
-              willChange: "transform",
-              ...containStyles,
-              height: "50%",
-              bottom: 0,
-            }}
-            className={`${baseStyles} !top-auto`}
-            aria-hidden="true"
-          />
-        </>
-      )
-
-    case "slide-stack":
-      return (
-        <motion.div
-          variants={slideStackVariants.overlay}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-          style={{ backgroundColor: colors.overlay, willChange: "transform", ...containStyles }}
-          className={baseStyles}
-          aria-hidden="true"
-        />
-      )
-
-    case "perspective-zoom":
-      // 透视缩放不需要遮罩，内容自身带 3D 变换
-      return (
-        <motion.div
-          initial={{ opacity: 0.8 }}
-          animate={{ opacity: 0 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          style={{ backgroundColor: colors.overlay, ...containStyles }}
-          className={baseStyles}
-          aria-hidden="true"
-        />
-      )
-
-    default:
-      return null
-  }
 }
