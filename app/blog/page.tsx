@@ -17,9 +17,9 @@ export default function BlogPage() {
     <main className="min-h-screen bg-white selection:bg-accent-pink selection:text-white">
       <Nav />
 
-      <div className="pt-24 md:pt-32 pb-12 md:pb-20 px-4 md:px-12 max-w-7xl mx-auto">
+      <div className="pt-20 md:pt-32 pb-8 md:pb-20 px-4 md:px-12 max-w-7xl mx-auto">
         {/* Static title - no animation needed on server */}
-        <h1 className="text-[15vw] md:text-[12vw] leading-[0.8] font-black tracking-tighter mb-10 md:mb-20 text-black drop-shadow-[6px_6px_0px_rgba(0,255,0,1)] md:drop-shadow-[10px_10px_0px_rgba(0,255,0,1)]">
+        <h1 className="text-[15vw] md:text-[12vw] leading-[0.8] font-black tracking-tighter mb-6 md:mb-20 text-black drop-shadow-[4px_4px_0px_rgba(0,255,0,1)] md:drop-shadow-[10px_10px_0px_rgba(0,255,0,1)]">
           THOUGHTS
         </h1>
 

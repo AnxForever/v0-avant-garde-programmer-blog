@@ -71,14 +71,14 @@ export default function ContactPage() {
     <main className="min-h-screen bg-white selection:bg-accent-pink selection:text-white">
       <Nav />
 
-      <div className="pt-32 pb-20 px-4 md:px-12 max-w-7xl mx-auto min-h-[80vh] flex flex-col justify-center">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+      <div className="pt-20 md:pt-32 pb-12 md:pb-20 px-4 md:px-12 max-w-7xl mx-auto min-h-[80vh] flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-20">
           {/* Left Column: Text */}
           <div>
             <motion.h1
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              className="text-[10vw] leading-[0.8] font-black tracking-tighter mb-12 text-black"
+              className="text-[12vw] md:text-[10vw] leading-[0.8] font-black tracking-tighter mb-6 md:mb-12 text-black"
             >
               LET&apos;S <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-blue to-accent-pink">
@@ -89,12 +89,12 @@ export default function ContactPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-xl md:text-2xl font-mono max-w-md mb-12"
+              className="text-base md:text-2xl font-mono max-w-md mb-6 md:mb-12"
             >
               Have a crazy idea? A project that defies logic? Or just want to argue about tabs vs spaces? Send a signal.
             </motion.p>
 
-            <div className="flex flex-col gap-4 font-mono text-lg">
+            <div className="flex flex-col gap-3 md:gap-4 font-mono text-base md:text-lg">
               <a href="mailto:anxforever@qq.com" className="hover:text-accent-pink transition-colors">
                 anxforever@qq.com
               </a>
@@ -114,26 +114,26 @@ export default function ContactPage() {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-gray-50 p-8 md:p-12 border-2 border-black relative"
+            className="bg-gray-50 p-6 md:p-12 border-2 border-black relative"
           >
             {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-8 h-8 bg-black" />
-            <div className="absolute bottom-0 left-0 w-8 h-8 bg-black" />
+            <div className="absolute top-0 right-0 w-6 h-6 md:w-8 md:h-8 bg-black" />
+            <div className="absolute bottom-0 left-0 w-6 h-6 md:w-8 md:h-8 bg-black" />
 
             {formStatus === "success" ? (
-              <div className="h-full flex flex-col items-center justify-center text-center py-20">
-                <div className="text-6xl mb-4">🚀</div>
-                <h3 className="text-3xl font-black uppercase mb-2">信号已接收</h3>
-                <p className="font-mono text-gray-600">我会以光速回复你。</p>
+              <div className="h-full flex flex-col items-center justify-center text-center py-12 md:py-20">
+                <div className="text-4xl md:text-6xl mb-3 md:mb-4">🚀</div>
+                <h3 className="text-2xl md:text-3xl font-black uppercase mb-2">信号已接收</h3>
+                <p className="font-mono text-gray-600 text-sm md:text-base">我会以光速回复你。</p>
                 <button
                   onClick={resetForm}
-                  className="mt-8 text-sm font-bold underline hover:text-accent-pink"
+                  className="mt-6 md:mt-8 text-sm font-bold underline hover:text-accent-pink"
                 >
                   发送另一条
                 </button>
               </div>
             ) : (
-              <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+              <form className="flex flex-col gap-6 md:gap-8" onSubmit={handleSubmit}>
                 {/* Honeypot 字段 - 对用户不可见，机器人会填写 */}
                 <div className="absolute opacity-0 h-0 overflow-hidden" aria-hidden="true" tabIndex={-1}>
                   <label htmlFor="website">Website</label>
@@ -155,7 +155,7 @@ export default function ContactPage() {
                 )}
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="name" className="font-mono font-bold uppercase text-sm">身份 / IDENTITY</label>
+                  <label htmlFor="name" className="font-mono font-bold uppercase text-xs md:text-sm">身份 / IDENTITY</label>
                   <input
                     id="name"
                     name="name"
@@ -165,12 +165,12 @@ export default function ContactPage() {
                     onChange={handleChange}
                     placeholder="你的名字…"
                     autoComplete="name"
-                    className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors"
+                    className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-3 md:py-4 text-base md:text-xl font-bold placeholder:text-gray-300 transition-colors"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="email" className="font-mono font-bold uppercase text-sm">坐标 / COORDINATES</label>
+                  <label htmlFor="email" className="font-mono font-bold uppercase text-xs md:text-sm">坐标 / COORDINATES</label>
                   <input
                     id="email"
                     name="email"
@@ -181,12 +181,12 @@ export default function ContactPage() {
                     placeholder="你的邮箱…"
                     autoComplete="email"
                     spellCheck={false}
-                    className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors"
+                    className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-3 md:py-4 text-base md:text-xl font-bold placeholder:text-gray-300 transition-colors"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="message" className="font-mono font-bold uppercase text-sm">传输内容 / TRANSMISSION</label>
+                  <label htmlFor="message" className="font-mono font-bold uppercase text-xs md:text-sm">传输内容 / TRANSMISSION</label>
                   <textarea
                     id="message"
                     name="message"
@@ -196,14 +196,14 @@ export default function ContactPage() {
                     onChange={handleChange}
                     placeholder="告诉我一切…"
                     autoComplete="off"
-                    className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-4 text-xl font-bold placeholder:text-gray-300 transition-colors resize-none"
+                    className="bg-transparent border-b-2 border-gray-300 focus:border-black outline-none py-3 md:py-4 text-base md:text-xl font-bold placeholder:text-gray-300 transition-colors resize-none"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={formStatus === "submitting"}
-                  className="bg-black text-white py-6 px-8 font-bold text-xl uppercase tracking-widest hover:bg-accent-pink transition-colors mt-4 group flex justify-between items-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="bg-black text-white py-4 md:py-6 px-6 md:px-8 font-bold text-base md:text-xl uppercase tracking-widest hover:bg-accent-pink transition-colors mt-2 md:mt-4 group flex justify-between items-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span>
                     {formStatus === "submitting" ? "传输中..." : formStatus === "error" ? "重新发送" : "发送信息"}

@@ -98,10 +98,10 @@ export function ExperimentContent({ experiment }: ExperimentContentProps) {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY, ease: "linear" }}
-                className="w-24 h-24 border-4 border-accent-blue border-t-transparent rounded-full mx-auto mb-6"
+                className="w-16 h-16 md:w-24 md:h-24 border-2 md:border-4 border-accent-blue border-t-transparent rounded-full mx-auto mb-4 md:mb-6"
               />
-              <h2 className="text-2xl font-black mb-2">功能开发中...</h2>
-              <p className="font-mono text-gray-400 text-sm">即将推出</p>
+              <h2 className="text-xl md:text-2xl font-black mb-2">功能开发中...</h2>
+              <p className="font-mono text-gray-400 text-xs md:text-sm">即将推出</p>
             </div>
           </div>
         )
@@ -112,22 +112,22 @@ export function ExperimentContent({ experiment }: ExperimentContentProps) {
     <main className="min-h-screen bg-black text-white selection:bg-accent-green selection:text-black">
       <Nav />
 
-      <div className="pt-32 pb-20 px-4 md:px-12 max-w-7xl mx-auto h-screen flex flex-col">
-        <div className="flex justify-between items-center mb-8">
+      <div className="pt-20 md:pt-32 pb-12 md:pb-20 px-4 md:px-12 max-w-7xl mx-auto min-h-screen md:h-screen flex flex-col">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-4 md:mb-8 gap-3 md:gap-0">
           <Link
             href="/lab"
-            className="inline-flex items-center gap-2 font-bold hover:text-accent-green transition-colors"
+            className="inline-flex items-center gap-2 font-bold hover:text-accent-green transition-colors text-sm md:text-base"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
             退出实验室
           </Link>
-          <div className="flex items-center gap-4">
-            <h1 className="font-black text-2xl">{experiment.title}</h1>
-            <div className="font-mono text-accent-pink text-sm">ID: {experiment.id}</div>
+          <div className="flex items-center gap-3 md:gap-4">
+            <h1 className="font-black text-lg md:text-2xl">{experiment.title}</h1>
+            <div className="font-mono text-accent-pink text-xs md:text-sm">ID: {experiment.id}</div>
           </div>
         </div>
 
-        <div className="flex-1 border-4 border-white relative bg-gray-900 overflow-hidden shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]">
+        <div className="flex-1 border-2 md:border-4 border-white relative bg-gray-900 overflow-hidden shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] md:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] min-h-[60vh] md:min-h-0">
           {renderExperiment()}
         </div>
       </div>

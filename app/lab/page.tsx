@@ -28,17 +28,17 @@ export default function LabPage() {
       {/* Background Animation */}
       <LabBackground />
 
-      <div className="relative z-10 pt-32 pb-20 px-4 md:px-12 max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-20 border-b border-white/20 pb-8">
-          <h1 className="text-[10vw] leading-[0.8] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">
+      <div className="relative z-10 pt-20 md:pt-32 pb-12 md:pb-20 px-4 md:px-12 max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-10 md:mb-20 border-b border-white/20 pb-4 md:pb-8">
+          <h1 className="text-[14vw] md:text-[10vw] leading-[0.8] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-500">
             THE LAB
           </h1>
-          <p className="font-mono text-sm md:text-base max-w-xs text-right hidden md:block text-accent-green">
+          <p className="font-mono text-xs md:text-base max-w-xs text-left md:text-right mt-3 md:mt-0 text-accent-green">
             EXPERIMENTAL PLAYGROUND FOR DIGITAL CHAOS AND CODE POETRY.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
           <AnimatePresence>
           {displayedExperiments.map((exp, index) => (
             <Link href={`/lab/${exp.slug}`} key={exp.id}>
@@ -50,12 +50,12 @@ export default function LabPage() {
                 onHoverEnd={() => setHoveredIndex(null)}
                 className="aspect-square border border-white/10 relative group cursor-pointer overflow-hidden bg-white/5 hover:border-accent-pink/50 transition-colors duration-500"
               >
-                <div className="absolute top-4 left-4 font-mono text-xs text-accent-blue opacity-70">
+                <div className="absolute top-2 left-2 md:top-4 md:left-4 font-mono text-[10px] md:text-xs text-accent-blue opacity-70">
                   {exp.id} // {exp.tags[0]}
                 </div>
 
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <h3 className="text-4xl font-black tracking-tighter group-hover:scale-125 transition-transform duration-500 z-10 group-hover:text-black mix-blend-difference text-center px-4">
+                  <h3 className="text-xl md:text-4xl font-black tracking-tighter group-hover:scale-125 transition-transform duration-500 z-10 group-hover:text-black mix-blend-difference text-center px-2 md:px-4">
                     {exp.title}
                   </h3>
                 </div>
@@ -72,7 +72,7 @@ export default function LabPage() {
 
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-20 pointer-events-none" />
 
-                <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-mono text-xs font-bold text-black z-20">
+                <div className="absolute bottom-2 right-2 md:bottom-4 md:right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-mono text-[10px] md:text-xs font-bold text-black z-20">
                   LAUNCH_EXP →
                 </div>
               </motion.div>
@@ -86,13 +86,13 @@ export default function LabPage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex justify-center mt-12"
+            className="flex justify-center mt-8 md:mt-12"
           >
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="group relative bg-white text-black px-8 py-4 font-bold text-lg uppercase tracking-wider border-4 border-white shadow-[6px_6px_0px_0px_rgba(255,0,255,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,255,255,1)] hover:-translate-y-1 transition-all duration-300"
+              className="group relative bg-white text-black px-6 md:px-8 py-3 md:py-4 font-bold text-base md:text-lg uppercase tracking-wider border-2 md:border-4 border-white shadow-[4px_4px_0px_0px_rgba(255,0,255,1)] md:shadow-[6px_6px_0px_0px_rgba(255,0,255,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,255,255,1)] md:hover:shadow-[8px_8px_0px_0px_rgba(0,255,255,1)] hover:-translate-y-1 transition-all duration-300"
             >
-              <span className="flex items-center gap-3">
+              <span className="flex items-center gap-2 md:gap-3">
                 {isExpanded ? "收起内容" : `查看全部实验 (${experiments.length})`}
                 <motion.span
                   animate={{ rotate: isExpanded ? 180 : 0 }}

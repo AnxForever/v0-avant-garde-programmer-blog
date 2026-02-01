@@ -17,10 +17,10 @@ interface BlogPostArticleProps {
 
 export function BlogPostArticle({ post }: BlogPostArticleProps) {
   return (
-    <article className="px-4 md:px-12 max-w-4xl mx-auto pb-16 md:pb-32">
+    <article className="px-4 md:px-12 max-w-4xl mx-auto pb-12 md:pb-32">
       {/* 文章摘要 - 截取内容前150字符 */}
-      <div className="bg-black text-white p-6 md:p-12 mb-8 md:mb-12 shadow-[8px_8px_0px_0px_rgba(255,0,255,1)] md:shadow-[16px_16px_0px_0px_rgba(255,0,255,1)] transform -rotate-1">
-        <p className="text-base md:text-2xl font-bold leading-relaxed font-mono">
+      <div className="bg-black text-white p-4 md:p-12 mb-6 md:mb-12 shadow-[4px_4px_0px_0px_rgba(255,0,255,1)] md:shadow-[16px_16px_0px_0px_rgba(255,0,255,1)] transform -rotate-1">
+        <p className="text-sm md:text-2xl font-bold leading-relaxed font-mono">
           &quot;{post.content.replace(/[#*`\[\]]/g, '').slice(0, 150).trim()}...&quot;
         </p>
       </div>

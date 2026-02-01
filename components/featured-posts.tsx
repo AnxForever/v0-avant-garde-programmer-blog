@@ -17,9 +17,11 @@ const decorColors = [
   { line: "border-accent-orange", gradient: "from-accent-orange to-accent-pink", tag: "bg-accent-orange/10 text-accent-orange" },
 ] as const
 
+type Post = (typeof featuredPosts)[number]
+
 export function FeaturedPosts() {
   return (
-    <section id="thoughts" className="py-32 px-4 md:px-12 bg-white relative overflow-hidden">
+    <section id="thoughts" className="py-12 md:py-32 px-4 md:px-12 bg-white relative overflow-hidden">
       {/* 背景装饰 */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-gradient-to-br from-accent-green to-accent-blue blur-3xl rounded-full" />
@@ -28,26 +30,26 @@ export function FeaturedPosts() {
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* 标题区域 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16 mb-8 md:mb-16">
           <div className="relative">
             {/* L形装饰线 */}
-            <div className="absolute -top-6 -left-6 w-16 h-16 border-l-4 border-t-4 border-accent-green" />
-            
-            <h2 className="text-6xl md:text-8xl font-black leading-[0.85] tracking-tighter mb-6">
+            <div className="absolute -top-3 -left-3 md:-top-6 md:-left-6 w-10 md:w-16 h-10 md:h-16 border-l-4 border-t-4 border-accent-green" />
+
+            <h2 className="text-4xl md:text-8xl font-black leading-[0.85] tracking-tighter mb-3 md:mb-6">
               <span className="text-black">LATEST</span>
               <br />
               <span className="bg-gradient-to-r from-accent-green to-accent-blue bg-clip-text text-transparent">
                 LOGS
               </span>
             </h2>
-            
-            <p className="text-lg md:text-xl text-gray-600 font-mono max-w-md">
+
+            <p className="text-base md:text-xl text-gray-600 font-mono max-w-md">
               // 技术思考与创意记录
             </p>
-            
+
             {/* 装饰元素 */}
-            <div className="absolute -bottom-4 right-0 w-3 h-3 bg-accent-pink rounded-full" />
-            <div className="absolute -bottom-8 left-1/3 w-0.5 h-12 bg-accent-green" />
+            <div className="absolute -bottom-4 right-0 w-3 h-3 bg-accent-pink rounded-full hidden md:block" />
+            <div className="absolute -bottom-8 left-1/3 w-0.5 h-12 bg-accent-green hidden md:block" />
           </div>
 
           <div className="hidden md:flex items-end justify-end">
@@ -57,8 +59,15 @@ export function FeaturedPosts() {
           </div>
         </div>
 
-        {/* 卡片网格 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* ====== 移动端：紧凑列表 ====== */}
+        <div className="md:hidden space-y-3">
+          {featuredPosts.map((post, index) => (
+            <MobileBlogCard key={post.id} post={post} index={index} />
+          ))}
+        </div>
+
+        {/* ====== PC端：网格布局 ====== */}
+        <div className="hidden md:grid md:grid-cols-2 gap-8">
           {featuredPosts.map((post, index) => {
             const colors = decorColors[index % decorColors.length]
 
@@ -81,30 +90,26 @@ export function FeaturedPosts() {
                   </div>
 
                   <div>
-                    {/* 分类标签 - 透明背景 */}
+                    {/* 分类标签 */}
                     <div className={`inline-block font-mono text-xs font-bold mb-4 px-3 py-1.5 border-2 border-current ${colors.tag}`}>
                       {post.category}
                     </div>
-                    
-                    {/* 标题 - 渐变色 */}
+
+                    {/* 标题 */}
                     <h3 className={`text-3xl md:text-4xl font-black tracking-tight leading-tight bg-gradient-to-r ${colors.gradient} bg-clip-text text-transparent`}>
                       {post.title}
                     </h3>
                   </div>
 
                   <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                    {/* 日期 */}
                     <span className="font-mono text-sm text-gray-400">
                       // {post.date}
                     </span>
-                    
-                    {/* 箭头按钮 */}
                     <div className="w-12 h-12 border-2 border-black bg-white flex items-center justify-center group-hover:bg-black group-hover:text-white group-hover:rotate-45 transition-all duration-300">
                       <ArrowUpRight className="w-6 h-6" strokeWidth={2.5} />
                     </div>
                   </div>
-                  
-                  {/* 装饰圆点 */}
+
                   <div className="absolute bottom-6 left-6 w-2 h-2 bg-black rounded-full opacity-20" />
                 </motion.div>
               </Link>
@@ -117,10 +122,10 @@ export function FeaturedPosts() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mt-16 flex justify-center"
+          className="mt-8 md:mt-16 flex justify-center"
         >
           <Link href="/blog">
-            <button className="group relative bg-white text-black font-black text-lg px-10 py-5 border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] transition-all duration-300">
+            <button className="group relative bg-white text-black font-black text-base md:text-lg px-8 md:px-10 py-4 md:py-5 border-2 md:border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] transition-all duration-300">
               <span className="relative z-10 flex items-center gap-3">
                 VIEW ALL POSTS
                 <ArrowUpRight className="w-5 h-5 group-hover:rotate-45 transition-transform" />
@@ -131,5 +136,44 @@ export function FeaturedPosts() {
         </motion.div>
       </div>
     </section>
+  )
+}
+
+// ====== 移动端博客卡片 ======
+function MobileBlogCard({ post, index }: { post: Post; index: number }) {
+  const colors = decorColors[index % decorColors.length]
+
+  return (
+    <Link href={`/blog/${post.slug}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.05 }}
+        className="group flex items-center gap-3 p-3 bg-white border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-x-[1px] active:translate-y-[1px] transition-all"
+      >
+        {/* 编号 */}
+        <span className="text-2xl font-black text-gray-200 w-8 text-center flex-shrink-0">
+          0{index + 1}
+        </span>
+
+        {/* 彩色竖线 */}
+        <div className={`w-0.5 h-10 flex-shrink-0 bg-gradient-to-b ${colors.gradient}`} />
+
+        {/* 内容 */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 mb-0.5">
+            <span className={`text-[10px] font-bold ${colors.tag} px-1.5 py-0.5 border border-current`}>
+              {post.category}
+            </span>
+            <span className="text-[10px] text-gray-400 font-mono">{post.date}</span>
+          </div>
+          <h3 className="text-sm font-black leading-tight truncate">{post.title}</h3>
+        </div>
+
+        {/* 箭头 */}
+        <ArrowUpRight className="w-4 h-4 flex-shrink-0 text-black/30 group-active:rotate-45 transition-transform" strokeWidth={2.5} />
+      </motion.div>
+    </Link>
   )
 }

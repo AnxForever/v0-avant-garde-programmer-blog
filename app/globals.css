@@ -218,3 +218,42 @@
 .chaos-mode img {
   filter: invert(1) hue-rotate(-180deg);
 }
+
+/* ==========================================
+   移动端优化工具类
+   ========================================== */
+
+/* 隐藏滚动条但保持滚动功能 */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Snap 滚动 */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+.snap-start {
+  scroll-snap-align: start;
+}
+.snap-center {
+  scroll-snap-align: center;
+}
+
+/* 移动端触摸优化 */
+@media (max-width: 767px) {
+  /* 禁用不需要的hover效果 */
+  @media (hover: none) {
+    .hover\:scale-105:hover {
+      transform: none;
+    }
+  }
+
+  /* 流畅滚动 */
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+}

@@ -16,7 +16,7 @@ export function Hero() {
   const prefersReducedMotion = useReducedMotion()
 
   return (
-    <section className="relative h-screen w-full overflow-hidden flex flex-col justify-center items-center bg-white px-4">
+    <section className="relative min-h-[70vh] md:h-screen w-full overflow-hidden flex flex-col justify-center items-center bg-white px-4 py-20 md:py-0">
       <div className="absolute inset-0 grid grid-cols-[repeat(20,minmax(0,1fr))] grid-rows-[repeat(20,minmax(0,1fr))] opacity-5 pointer-events-none">
         {gridCells}
       </div>
